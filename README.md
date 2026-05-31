@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Markdown
+# Sistem Arsip Anti-Ransomware (Vault)
+**Zero-Trust Cryptographic Data Dispersal System**
 
-## Getting Started
+Sistem Arsip Anti-Ransomware (Vault) adalah aplikasi keamanan penyimpanan dokumen tingkat lanjut yang dirancang untuk memitigasi risiko kehilangan data akibat serangan *ransomware*. Sistem ini menerapkan prinsip *Zero-Trust* dengan memadukan algoritma enkripsi simetrik dan teknik pemecahan kunci rahasia (*Secret Sharing*), sehingga tidak ada satu pun *node* penyimpanan yang memiliki akses penuh terhadap dokumen utuh.
 
-First, run the development server:
+## Fitur Utama
 
-```bash
+* **Enkripsi Sisi Klien (Client-Side Encryption):** Dokumen dienkripsi langsung di perangkat pengguna menggunakan algoritma **AES-256-GCM** sebelum dikirim ke server.
+* **Shamir's Secret Sharing (SSS):** Kunci utama (Master Key) dipecah menjadi beberapa bagian (shares). Dibutuhkan setidaknya 2 dari 3 pecahan kunci (Threshold: 2/3) untuk merekonstruksi dokumen.
+* **Distribusi Multi-Node:** Pecahan file dan kunci didistribusikan secara terpisah ke 3 lingkungan *node* yang berbeda:
+  * Node Lokal
+  * Node PDN (Pusat Data Nasional)
+  * Node Cloud
+* **Dashboard Pemantauan Integritas:** Dilengkapi dengan *Scanner Real-time* untuk mendeteksi ketersediaan data di masing-masing *node*.
+* **Audit Trail (Log Keamanan):** Sistem pelacakan aktivitas (*Accountability*) yang mencatat setiap proses unggah, unduh, penghapusan parsial/total, dan peringatan kritis secara persisten.
+* **Simulasi Serangan:** Fitur demonstrasi untuk mensimulasikan hilangnya integritas pada Node Lokal (Ransomware Attack) dan menguji keandalan rekonstruksi data dari *node* yang tersisa.
+
+## Teknologi yang Digunakan
+
+* **Framework:** Next.js / React
+* **Styling:** Tailwind CSS
+* **Database & Storage:** Supabase
+* **Kriptografi:** Web Crypto API (AES-256-GCM)
+* **Secret Sharing:** `secrets.js-grempe`
+
+## Panduan Instalasi (Development)
+
+1. **Kloning repositori ini:**
+   ```bash
+   git clone [https://github.com/USERNAME-ANDA/vault-anti-ransomware.git](https://github.com/USERNAME-ANDA/vault-anti-ransomware.git)
+   cd vault-anti-ransomware
+Instal dependensi:
+
+Bash
+npm install
+Konfigurasi Environment:
+Buat file .env.local di root direktori dan masukkan konfigurasi Supabase Anda:
+
+Code snippet
+NEXT_PUBLIC_SUPABASE_URL=url_supabase_anda
+NEXT_PUBLIC_SUPABASE_ANON_KEY=kunci_anon_supabase_anda
+Jalankan server pengembangan:
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Buka http://localhost:3000 di browser Anda untuk melihat hasilnya.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tim Pengembang / Penyusun
+Proyek kriptografi ini disusun oleh Zefanya Raditya Pratama
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Lisensi
+Proyek ini dibuat untuk tujuan akademis dan demonstrasi keamanan sistem.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Dibuat untuk memenuhi tugas/proyek Kriptografi dan Keamanan Data.
